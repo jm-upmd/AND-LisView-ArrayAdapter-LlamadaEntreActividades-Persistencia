@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/nombre_queso_texview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_item_lista"
+        android:layout_marginRight="@dimen/margin_item_lista"
+        android:text="Texto"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/origen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_item_lista"
+        android:layout_marginRight="@dimen/margin_item_lista"
+        android:text="Texto"
+        android:textSize="12sp"
+        android:textStyle="italic" />
+</LinearLayout>
