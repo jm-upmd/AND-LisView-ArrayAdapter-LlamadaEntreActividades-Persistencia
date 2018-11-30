@@ -1,29 +1,38 @@
 package com.example.jose.ejerciciolistview;
 
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int CODIGO_SOLICITUD = 0;
     int posSelec=0;
+    static String KEY_POSICION;
+    ArrayAdapter<Queso> adaptador;
+    ListView listViewQuesos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_op_adapter);
 
+         KEY_POSICION= getClass().getName() + "key_posicion";
+
         // Instancia objetos view
-        final ListView listViewQuesos = findViewById(R.id.listaView);
+        listViewQuesos = findViewById(R.id.listaView);
         Button btnBorrar = findViewById(R.id.btnBorrar);
         Button btnInsertar = findViewById(R.id.btnInsertar);
         Button btnModificar = findViewById(R.id.btnModificar);
@@ -36,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         // También puede crearme una clase adaptodor extendiendo de ArrayAdapter y reescribirle
         // el getView
 
-        final ArrayAdapter<Queso> adaptador = new ArrayAdapter<Queso>(this,0,listaQuesos){
+         adaptador = new ArrayAdapter<Queso>(this,0,listaQuesos){
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
@@ -50,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
 
                 TextView origen = convertView.findViewById(R.id.origen);
                 origen.setText(listaQuesos.get(position).getOrigen());
+
+                ImageView imgFavorito = convertView.findViewById(R.id.imgFavorito);
+
+                imgFavorito.setVisibility(listaQuesos.get(position).isFavorito() ? View.VISIBLE : View.GONE);
                 
                 return convertView;
             }
@@ -72,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 posSelec = position;
+
+                // Llamada a segunda actividad pasando la posición
+                Intent intent = new Intent(MainActivity.this, DetalleQueso.class);
+                intent.putExtra(KEY_POSICION,position);
+                startActivityForResult(intent, CODIGO_SOLICITUD);
+
           }
 
 
@@ -119,5 +138,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CODIGO_SOLICITUD && resultCode == RESULT_OK){
+            Log.d("Queso",((Boolean) data.getBooleanExtra(DetalleQueso.QUESO_CAMBIADO_KEY,false)).toString());
 
+            if(data.getBooleanExtra(DetalleQueso.QUESO_CAMBIADO_KEY,false)){
+
+                adaptador.notifyDataSetChanged();
+                //listViewQuesos.setSelection(posSelec);
+
+
+            }
+        }
+    }
 }
