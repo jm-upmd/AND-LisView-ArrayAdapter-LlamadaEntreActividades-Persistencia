@@ -1,6 +1,7 @@
 package com.example.jose.ejerciciolistview;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,12 +25,16 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<Queso> adaptador;
     ListView listViewQuesos;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_op_adapter);
 
+
          KEY_POSICION= getClass().getName() + "key_posicion";
+
 
         // Instancia objetos view
         listViewQuesos = findViewById(R.id.listaView);
@@ -151,5 +156,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d("quesos","Escribiendo archivo");
+
+        // Cada vez que la actividad entra en estado de pausa escribo la lista de quesos
+        // en el fichero.
+        ListaQuesos.getInstance().escribir();
+        super.onPause();
     }
 }
