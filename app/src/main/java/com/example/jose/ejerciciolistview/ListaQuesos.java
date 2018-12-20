@@ -16,7 +16,7 @@ class ListaQuesos {
     // Obtenemos el contexto de la aplicación
     // para poder usarlo en el los metodos de lectura/escritura en fichero
 
-    Context context = App.getAppContext();
+    Context context = MainActivity.getContext(); //App.getAppContext();
 
 
     private static final ListaQuesos ourInstance = new ListaQuesos();

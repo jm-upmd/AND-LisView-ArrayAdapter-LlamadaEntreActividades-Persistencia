@@ -25,12 +25,20 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<Queso> adaptador;
     ListView listViewQuesos;
 
+    private static Context mContext;
 
+
+
+    static Context getContext(){
+        return mContext;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_op_adapter);
+
+        mContext = getApplicationContext();
 
 
          KEY_POSICION= getClass().getName() + "key_posicion";
