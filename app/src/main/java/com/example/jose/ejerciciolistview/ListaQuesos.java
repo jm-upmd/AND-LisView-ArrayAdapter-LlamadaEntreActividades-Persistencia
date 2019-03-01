@@ -111,10 +111,7 @@ class ListaQuesos {
         return new Queso(a[0],a[1], a[2].equals("1"));
     }
 
-    // Constructor crea la lista de quesos
-
-
-
+    // Sólo se ejecuta este método en el caso de que no exista un fichero con los quesos
     void inicializaQuesos(){
         quesos.add(new Queso("Abbaye du Mont des Cats", "Luxemburgo"));
         quesos.add(new Queso("Abertam", "Malta"));
